@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Chatbot – AI Doctor Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════  HEADER  ═══════════════════════════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="header-logo" aria-hidden="true">🩺</span>
+      <div>
+        <h1 class="header-title">Medical Chatbot</h1>
+        <p class="header-subtitle">AI-powered medical image consultation assistant</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════  MAIN  ════════════════════════════ -->
+  <main class="main-layout">
+
+    <!-- ─────────────────────── LEFT: INPUT PANEL ─────────────────────────── -->
+    <section class="card input-panel" aria-labelledby="input-heading">
+      <h2 id="input-heading" class="card-heading">
+        <span aria-hidden="true">📋</span> Patient Input
+      </h2>
+
+      <!-- Error banner -->
+      <div id="errorBanner" class="error-banner hidden" role="alert"></div>
+
+      <!-- ── Voice recording ── -->
+      <div class="field-group">
+        <h3 class="field-label"><span aria-hidden="true">🎙️</span> Voice Query</h3>
+        <p class="field-hint">Record your question or describe your symptoms.</p>
+
+        <button id="recordBtn" class="btn btn-record" type="button">
+          <span class="btn-icon" aria-hidden="true">⏺</span>
+          <span id="recordBtnText">Start Recording</span>
+        </button>
+
+        <div id="recordingStatus" class="recording-status hidden" aria-live="polite">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Recording…
+        </div>
+
+        <audio id="recordedAudioPlayer" controls class="audio-player hidden"
+               aria-label="Your recorded audio"></audio>
+      </div>
+
+      <!-- ── Image upload ── -->
+      <div class="field-group">
+        <h3 class="field-label"><span aria-hidden="true">🖼️</span> Medical Image <span class="optional-tag">optional</span></h3>
+        <p class="field-hint">Upload a photo of the affected area for visual analysis.</p>
+
+        <div id="uploadArea" class="upload-area" tabindex="0" role="button"
+             aria-label="Upload medical image">
+          <input type="file" id="imageInput" accept="image/*" class="sr-only"
+                 aria-label="Choose image file" />
+          <label for="imageInput" class="upload-label" id="uploadLabel">
+            <span class="upload-icon" aria-hidden="true">📁</span>
+            <span class="upload-hint-text">Click to upload or drag &amp; drop</span>
+            <span class="upload-sub">JPG, PNG, GIF, WEBP supported</span>
+          </label>
+          <img id="imagePreview" src="" alt="Uploaded medical image preview"
+               class="image-preview hidden" />
+          <button id="clearImageBtn" class="btn-clear-image hidden"
+                  type="button" aria-label="Remove image">✕ Remove</button>
+        </div>
+      </div>
+
+      <!-- ── Submit ── -->
+      <button id="analyzeBtn" class="btn btn-analyze" type="button" disabled>
+        <span aria-hidden="true">🔍</span> Analyze
+      </button>
+    </section>
+
+    <!-- ─────────────────────── RIGHT: RESULTS PANEL ──────────────────────── -->
+    <section class="card results-panel" aria-labelledby="results-heading"
+             aria-live="polite">
+      <h2 id="results-heading" class="card-heading">
+        <span aria-hidden="true">👨‍⚕️</span> Doctor's Analysis
+      </h2>
+
+      <!-- Loading -->
+      <div id="loadingSection" class="loading-state hidden" aria-busy="true">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Analyzing your condition, please wait…</p>
+      </div>
+
+      <!-- Results -->
+      <div id="resultsContent" class="hidden">
+        <div class="result-block">
+          <h3 class="result-block-title">
+            <span aria-hidden="true">📝</span> Your Query (transcribed)
+          </h3>
+          <p id="transcriptionOutput" class="result-text transcription-text"></p>
+        </div>
+
+        <div class="result-block doctor-block">
+          <h3 class="result-block-title">
+            <span aria-hidden="true">💊</span> Doctor's Response
+          </h3>
+          <p id="doctorResponseOutput" class="result-text doctor-text"></p>
+        </div>
+
+        <div class="result-block">
+          <h3 class="result-block-title">
+            <span aria-hidden="true">🔊</span> Audio Response
+          </h3>
+          <audio id="responseAudioPlayer" controls class="audio-player"
+                 aria-label="Doctor's spoken response"></audio>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="emptyState" class="empty-state">
+        <span class="empty-icon" aria-hidden="true">🩺</span>
+        <p>Record your voice and optionally upload a medical image, then click
+           <strong>Analyze</strong> to receive an AI doctor's assessment.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════  FOOTER  ══════════════════════════ -->
+  <footer class="site-footer">
+    <p>
+      ⚠️ <strong>Disclaimer:</strong> This tool is for <em>educational purposes only</em>.
+      It is not a substitute for professional medical advice, diagnosis, or treatment.
+      Always consult a qualified healthcare provider.
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
