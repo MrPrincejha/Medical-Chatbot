@@ -50,7 +50,7 @@ Browser – display text + play audio
 
 | Requirement | Version |
 |-------------|---------|
-| Python | 3.10 + |
+| Python | 3.10+ |
 | [Groq API key](https://console.groq.com) | – |
 | `ffmpeg` (for audio conversion, optional) | any |
 

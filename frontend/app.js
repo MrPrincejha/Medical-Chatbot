@@ -60,7 +60,15 @@ async function startRecording() {
     isRecording = true;
     setRecordingUI(true);
   } catch (err) {
-    showError('Microphone access denied. Please allow microphone permissions and try again.');
+    if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+      showError('Microphone access denied. Please allow microphone permissions in your browser and try again.');
+    } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+      showError('No microphone found. Please connect a microphone and try again.');
+    } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+      showError('Microphone is already in use by another application. Please close it and try again.');
+    } else {
+      showError(`Could not access microphone: ${err.message}`);
+    }
   }
 }
 

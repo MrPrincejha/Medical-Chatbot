@@ -14,11 +14,15 @@ import os
 import tempfile
 from pathlib import Path
 
+import logging
+
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -62,7 +66,7 @@ app = FastAPI(title="Medical Chatbot API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -144,7 +148,8 @@ async def analyze(
             audio_b64 = base64.b64encode(f.read()).decode("utf-8")
 
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+        logger.exception("Error during /api/analyze")
+        raise HTTPException(status_code=500, detail="An error occurred while processing your request.") from exc
 
     finally:
         for path in temp_files:
